@@ -3,19 +3,19 @@ import requests
 
 app = Flask(__name__)
 
-IPSTACK_API_KEY = '26aa65a0692209cba4f5faf9c731ac35'
+IPINFO_API_KEY = 'YOUR_IPINFO_API_KEY'
 
 def get_user_location(ip):
-    url = f"http://api.ipstack.com/{ip}?access_key={IPSTACK_API_KEY}"
+    url = f"http://ipinfo.io/{ip}?token={IPINFO_API_KEY}"
     response = requests.get(url)
     data = response.json()
     location = {
         'ip': data['ip'],
-        'country': data['country_name'],
-        'region': data['region_name'],
+        'country': data['country'],
+        'region': data['region'],
         'city': data['city'],
-        'latitude': data['latitude'],
-        'longitude': data['longitude']
+        'latitude': data['loc'].split(',')[0],
+        'longitude': data['loc'].split(',')[1]
     }
     return location
 
